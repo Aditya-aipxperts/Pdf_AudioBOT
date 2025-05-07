@@ -1,6 +1,7 @@
 import os
 import pypdf
 import sounddevice as sd
+from dotenv import load_dotenv
 from scipy.io.wavfile import write
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import SentenceTransformerEmbeddings
@@ -12,8 +13,9 @@ from gtts import gTTS
 from openai import OpenAI
 
 
-GROQ_API_KEY = "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"
-ELEVEN_API_KEY = "sk_ddea3eda94b3bf1d9e864413e8f24fd852ecfa9b4c295e05"
+load_dotenv()
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+ELEVEN_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 
 set_api_key(ELEVEN_API_KEY)
 
@@ -81,7 +83,6 @@ def speak_response(text):
         play(audio)
     except Exception as e:
         print(f"Error generating speech: {e}")
-        # Fall back to gTTS
         print("Falling back to gTTS...")
         tts = gTTS(text=text, lang='en', slow=False)
         tts.save("response.mp3")
