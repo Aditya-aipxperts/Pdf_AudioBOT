@@ -1,3 +1,4 @@
+.env
 audio/*.wav
 audio/*.mp3
 pdfs/*.pdf
